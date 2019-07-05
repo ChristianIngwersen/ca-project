@@ -13,6 +13,15 @@ jobs:
           name: Python test
           command:
             python tests.py
+  
+  deploy:
+    docker:
+      - image: $DOCKER_USER/chatapp:latest
+    steps:
+      - run:
+          name: Deploy over SSH
+          command: |
+            ssh -i $SSH_KEY $SSH_USER@$SSH_HOST
 
 
   dockerize:
@@ -38,4 +47,7 @@ workflows:
       - dockerize:
           requires:
             - test
+      - deploy:
+         requires:
+           - dockerize
 
