@@ -28,8 +28,8 @@ jobs:
      - run: docker build -t $DOCKER_USER/chatapp:$CIRCLE_SHA1 .
 
      # deploy the image
-     - run: docker push $DOCKER_USER/chatapp:$CIRCLE_SHA1
- 
+     - run: docker tag $DOCKER_USER/chatapp:$CIRCLE_SHA1 $DOCKER_USER/chatapp:latest
+     - run: docker push $DOCKER_USER/chatapp:latest
 workflows:
   version: 2
   feature_master:
