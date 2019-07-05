@@ -22,7 +22,7 @@ functional-test:
           command: curl $SSH_HOST:8000
   
 
-  deploy:
+deploy:
     machine: true
     steps:
       - checkout:
