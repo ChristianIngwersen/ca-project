@@ -38,7 +38,7 @@ deploy:
           command: ssh $SSH_USER@$SSH_HOST "docker-compose stop && docker-compose pull && docker-compose up -d chatapp"
 
 
-  dockerize:
+dockerize:
    machine: true
    steps:
      - checkout
