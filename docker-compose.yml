@@ -1,0 +1,7 @@
+version: '3'
+services:
+  chatapp:
+    image: "chrising69/chatapp:latest"
+    ports:
+      - "8000:5000"
+
