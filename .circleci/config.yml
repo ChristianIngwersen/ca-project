@@ -23,7 +23,7 @@ jobs:
           command: apt-get install openssh-server -y
       - run:
           name: Deploy over SSH
-          command: ssh $SSH_USER@$SSH_HOST echo "hello"
+          command: ssh $SSH_USER@$SSH_HOST | echo "yes"
 
 
   dockerize:
