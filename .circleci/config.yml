@@ -1,0 +1,52 @@
+version: 2.0
+jobs:
+  test:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout:
+      - run:
+          name: python test
+          command:
+            python test.py
+      - store_test_results:
+          path: build/test-results
+
+  package:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout:
+      - run:
+          name: gradle jar
+          command:
+            gradle jar
+      - store_artifacts:
+          path: build/libs
+          destination: prefix
+
+  dockerize:
+   machine: true
+   steps:
+     - checkout
+     # Login to docker
+     - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+     # build the application image
+     - run: docker build -t $DOCKER_USER/app:$CIRCLE_SHA1 .
+
+     # deploy the image
+     - run: docker push $DOCKER_USER/app:$CIRCLE_SHA1
+ 
+workflows:
+  version: 2
+  feature_master:
+    jobs:
+      - test
+      - package:
+          requires:
+            - test
+      - dockerize:
+          requires:
+            - package
+
