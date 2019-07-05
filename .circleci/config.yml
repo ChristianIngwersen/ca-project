@@ -14,7 +14,7 @@ jobs:
           command:
             python tests.py
   
-functional-test:
+  functional-test:
     machine: true
     steps:
       - run:
@@ -22,13 +22,10 @@ functional-test:
           command: curl $SSH_HOST:8000
   
 
-deploy:
+  deploy:
     machine: true
     steps:
       - checkout:
-      #- run:
-      #    name: install SSH
-      #    command: apt-get install openssh-server -y
       - run:
           name: Copy files to server
           command: scp docker-compose.yml $SSH_USER@$SSH_HOST:~/
@@ -38,20 +35,20 @@ deploy:
           command: ssh $SSH_USER@$SSH_HOST "docker-compose stop && docker-compose pull && docker-compose up -d chatapp"
 
 
-dockerize:
-   machine: true
-   steps:
-     - checkout
+  dockerize:
+    machine: true
+    steps:
+      - checkout
      # Login to docker
-     - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
      # build the application image
-     - run: docker build -t $DOCKER_USER/chatapp:$CIRCLE_SHA1 .
+      - run: docker build -t $DOCKER_USER/chatapp:$CIRCLE_SHA1 .
 
      # deploy the image
-     - run: docker tag $DOCKER_USER/chatapp:$CIRCLE_SHA1 $DOCKER_USER/chatapp:latest
-     - run: docker push $DOCKER_USER/chatapp:$CIRCLE_SHA1
-     - run: docker push $DOCKER_USER/chatapp:latest
+      - run: docker tag $DOCKER_USER/chatapp:$CIRCLE_SHA1 $DOCKER_USER/chatapp:latest
+      - run: docker push $DOCKER_USER/chatapp:$CIRCLE_SHA1
+      - run: docker push $DOCKER_USER/chatapp:latest
 
 workflows:
   version: 2
