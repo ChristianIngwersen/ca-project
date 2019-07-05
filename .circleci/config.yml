@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            ssh -i $SSH_KEY $SSH_USER@$SSH_HOST
+            ssh $SSH_USER@$SSH_HOST
 
 
   dockerize:
