@@ -19,9 +19,11 @@ jobs:
       - image: $DOCKER_USER/chatapp:latest
     steps:
       - run:
+          name: install SSH
+          command: apt-get install openssh-server -y
+      - run:
           name: Deploy over SSH
-          command: |
-            ssh $SSH_USER@$SSH_HOST echo "hello"
+          command: ssh $SSH_USER@$SSH_HOST echo "hello"
 
 
   dockerize:
