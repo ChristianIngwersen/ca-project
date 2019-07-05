@@ -27,7 +27,7 @@ jobs:
 
       - run:
           name: Deploy over SSH
-          command: ssh $SSH_USER@$SSH_HOST "docker pull $DOCKER_USER/chatapp:latest &&  docker-compose up chatapp"
+          command: ssh $SSH_USER@$SSH_HOST "docker-compose pull && docker-compose up -d chatapp"
 
 
   dockerize:
