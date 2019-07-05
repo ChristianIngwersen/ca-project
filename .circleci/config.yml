@@ -13,8 +13,6 @@ jobs:
           name: Python test
           command:
             python tests.py
-      - store_test_results:
-         path: test-results
 
 
   dockerize:
